@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./index.css";
 import "../bootstrap/bootstrap.min.css";
 import "./loadingbar.css";
+import Header from "../header";
+
 const Cloud = () => {
   const [value, setValue] = useState(localStorage.getItem("inputValue"));
   const [username, setUsername] = useState(localStorage.getItem("user"));
@@ -279,59 +281,12 @@ const Cloud = () => {
 
   return (
     <React.Fragment>
-      <html>
         <div id="whole">
-          <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#">
-                <img
-                  src="http://www.punchittech.com/assets/img/brillio-logo.jpg"
-                  alt=""
-                  width="100"
-                  height="70"
-                />
-              </a>
-
-              <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                  <li class="nav-item">PCI Data File Processing Tool</li>
-                </ul>
-                <div
-                  class="btn-group"
-                  role="group"
-                  aria-label="Basic radio toggle button group"
-                >
-                  <input
-                    type="radio"
-                    class="btn-check  "
-                    name="btnradio"
-                    id="btnradio1"
-                    autocomplete="off"
-                    checked
-                  ></input>
-                  <label class="btn btn-outline-success" for="btnradio1">
-                    Monitoring
-                  </label>
-
-                  <input
-                    type="radio"
-                    class="btn-check"
-                    name="btnradio"
-                    id="btnradio2"
-                    autocomplete="off"
-                  ></input>
-                  <label class="btn btn-outline-success" for="btnradio2">
-                    Cost Explorer
-                  </label>
-                </div>
-              </div>
-            </div>
-          </nav>
-
+          <Header />
           <div className="row">
             <div className="column1">
               <div className="container">
-                <div className="hellomsz">Hey {username || "User"}</div>
+                <div className="hellomsz">Hey { username || "User"}</div>
                 <form id="form">
                   <h3 id="h3id">Select Payer :</h3>
 
@@ -507,7 +462,6 @@ const Cloud = () => {
           </div>
         </div>
         {/* <img src="/process.gif" alt="image2" /> */}
-      </html>
     </React.Fragment>
   );
 };

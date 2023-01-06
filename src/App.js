@@ -7,13 +7,15 @@ import {
   Routes,
 } from "react-router-dom";
 import Cloud from "./components/Cloud";
-import Login from "./components/login";
+import Dashboard from "./components/dashboard";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/home" element={<Cloud />} />
+      <Route path="/" element={<Cloud />} />
+      <Route path="/home" element={<Cloud />} />
+      <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );
