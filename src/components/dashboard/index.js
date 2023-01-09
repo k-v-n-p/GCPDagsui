@@ -1,19 +1,20 @@
 import React,{ useState, useEffect } from 'react';
-import Plot from 'react-plotly.js';
+import Graph from '../graph';
 
 import Header from "../header";
 
 const Dashboard = () => {
-
-
-    const getData = async () => {
-          const CordinatesUrl ="http://localhost:3001/";
+  const [coords, setCoords] = useState({});
+  const [coordsAr, setCoordsAr] = useState([]);
+ const [titles, setTitles] = useState([]);
+    const getDataJson = async () => {
+      console.log("in get data")
+          const CordinatesUrl ="http://localhost:3001/dashboard";
           const response = await fetch(CordinatesUrl, {
             method: "GET",
             headers: {"Content-Type": "application/json"},
             })
             .then((response) => {
-              console.log(response.ok,response.json())
               if (response.ok) {
                 return response.json();
               } else {
@@ -21,32 +22,56 @@ const Dashboard = () => {
               }
             })
             .then((data) => {
-                console.log(JSON.stringify(data));
+              setCoordsAr(data);
+              console.log(coordsAr)
             })
+            .catch((err) => console.log(err));
     }
-    getData();
+
+    const getData = async () => {
+      console.log("in get data")
+          const CordinatesUrl ="http://localhost:3001/dashboard";
+          const response = await fetch(CordinatesUrl, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+            })
+            .then((response) => {
+              if (response.ok) {
+                return response.arrayBuffer();
+              } else {
+                throw new Error(response.statusText);
+              }
+            })
+            .then((data) => {
+              console.log("data",data)
+              let title=[];
+              data.map(each =>{
+                    title.push(each.shift())
+                })
+                console.log("title: ",title)
+              setTitles(title);
+              setCoordsAr(data);
+            })
+            .catch((err) => console.log(err));
+    }
+    
+
+    useEffect(() => {
+      getData();
+      // fetch("http://localhost:3001/")
+      // .then((response) => response.json())
+      // .then((data) => setCoords(data));
+    },[])
 
     return (
         
         <div id="whole">
             <Header />
+            <br /><br />
+            <button onClick={getData}>refresh</button> <br />
+            <Graph data={coords} dataAr={coordsAr} titles={titles}/>
+
             
-            <Plot
-            data={[
-            {
-                x: [1, 2, 3],
-                y: [2, 6, 3],
-                type: 'scatter',
-                mode: 'lines+markers',
-                marker: {color: 'red'},
-            },
-            {type: 'bar'},
-            ]}
-            layout={ {width: 480, height: 360, title: 'graph'} }
-            // , grid: {rows: 1, columns: 2, pattern: 'independent'} //inside layout
-            config={{ displayModeBar : false, scrollZoom: false }}
-    
-        />
       </div>
     );
 }
